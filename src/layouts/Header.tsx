@@ -3,10 +3,9 @@ import { ReactComponent as Logo } from "../images/TerraswapLogo.svg"
 import Container from "../components/Container"
 import Connect from "./Connect"
 import styles from "./Header.module.scss"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import Sidebar from "./Sidebar"
 import styled from "styled-components"
-import Expand from "../components/Expand"
 
 const SidebarWrapper = styled.div`
   position: relative;
@@ -28,7 +27,7 @@ const Banner = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  background-color: #0222ba;
+  background-color: #f15e7e;
   color: #ffffff;
   text-align: center;
   padding: 11px;
@@ -48,7 +47,6 @@ const Banner = styled.div`
     position: absolute;
     left: 0;
     top: 0;
-    background-color: #ffffff7f;
   }
 `
 
@@ -59,6 +57,7 @@ const Header = () => {
     () => location.pathname === "/migrate",
     [location]
   )
+  const navigate = useNavigate()
 
   useEffect(() => {
     let timerId: any
@@ -94,8 +93,10 @@ const Header = () => {
 
   return (
     <>
-      <Banner>
-        {isMigration ? "Terraswap Classic - Migration" : "Terraswap Classic"}
+      <Banner onClick={() => !isMigration && navigate("/migrate")}>
+        {isMigration
+          ? "Terraswap Classic - Migration Center"
+          : "Terraswap Classic - Migration is now available, click here!"}
       </Banner>
       <header className={styles.header}>
         <Container className={styles.container}>
