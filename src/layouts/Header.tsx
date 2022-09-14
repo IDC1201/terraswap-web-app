@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { ReactComponent as Logo } from "../images/TerraswapLogo.svg"
 import Container from "../components/Container"
 import Connect from "./Connect"
 import styles from "./Header.module.scss"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import Sidebar from "./Sidebar"
 import styled from "styled-components"
+import Expand from "../components/Expand"
 
 const SidebarWrapper = styled.div`
   position: relative;
@@ -53,6 +54,12 @@ const Banner = styled.div`
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
+  const location = useLocation()
+  const isMigration = useMemo(
+    () => location.pathname === "/migrate",
+    [location]
+  )
+
   useEffect(() => {
     let timerId: any
     const showConnectButtonAfter1Sec = () => {
@@ -87,7 +94,9 @@ const Header = () => {
 
   return (
     <>
-      <Banner>Terraswap Classic</Banner>
+      <Banner>
+        {isMigration ? "Terraswap Classic - Migration" : "Terraswap Classic"}
+      </Banner>
       <header className={styles.header}>
         <Container className={styles.container}>
           <section className={styles.wrapper}>
